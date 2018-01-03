@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Color palette -->
+    <color name="teal_blue">#007eb0</color>
+    <color name="navy">#002539</color>
+    <color name="black">#282828</color>
+    <color name="green">#82b361</color>
+    <color name="green_disable">#4882b361</color>
+    <color name="light_gold">#fcc55e</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="dark_slate_blue">#162c4b</color>
+    <color name="dark_opacity">#33000000</color>
+    <color name="golden_rod">#f8aa08</color>
+    <color name="tomato">#da4121</color>
+    <color name="avocado_green">#70af1d</color>
+    <color name="kermit_green">#6ba600</color>
+    <color name="olive_green">#c1cca6</color>
+    <color name="purpley_grey">#9b9b9b</color>
+    <color name="black_60">#99282828</color>
+    <color name="beige">#f6f2dd</color>
+    <color name="dark_grey">#353535</color>
+    <color name="black_50">#80000000</color>
+    <color name="dark_slate_blue_two">#1c5056</color>
+    <color name="soft_green">#6fbb93</color>
+    <color name="cobalt">#1e658d</color>
+    <color name="black__80">#cc000000</color>
+    <color name="bluey_grey">#a4b9c5</color>
+    <color name="rusty_red">#c6270d</color>
+    <color name="squash">#e38115</color>
+    <color name="silver">#dae2e4</color>
+    <color name="silver_two">#dae1e3</color>
+    <color name="light_silver">#cbcbcb</color>
+    <color name="white_six">#d8d8d8</color>
+    <color name="white_seven">#eaeaea</color>
+    <color name="grey_ldef">#f8f8f8</color>
+    <color name="warm_grey">#9b9b9b</color>
+</resources>
+

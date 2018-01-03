@@ -1,0 +1,32 @@
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="moviesViewModel"
+            type="com.example.silvio.moviesaoo.viewmodel.MoviesListViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.silvio.moviesaoo.view.MoviesListActivity">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator_iv"
+            android:background="@color/black" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/rv_margin"
+            android:layout_marginTop="@dimen/rv_top_margin" />
+
+    </LinearLayout>
+</layout>

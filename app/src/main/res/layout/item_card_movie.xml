@@ -1,0 +1,51 @@
+<layout>
+
+    <data>
+
+        <import type="com.example.silvio.moviesaoo.viewholder.MovieCardViewHolder" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="holder"
+            type="com.example.silvio.moviesaoo.viewholder.MovieCardViewHolder" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/selector_cornered"
+        android:elevation="6dp"
+        android:onClick="@{()->holder.moveToDetails()}"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:minHeight="185dp"
+            android:minWidth="130dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{holder.movieImgUrl}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@color/golden_rod"
+            android:text="@{holder.title}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:font="@{@string/m_bold}" />
+
+    </LinearLayout>
+
+</layout>
