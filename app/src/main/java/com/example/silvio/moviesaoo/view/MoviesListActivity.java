@@ -57,7 +57,15 @@ public class MoviesListActivity extends GenericActivity implements ContextIntera
     @Override
     public ArrayList<MovieData> getMoviesList() {
         Bundle bundle = getIntent().getBundleExtra("bundle");
-        return bundle.getParcelableArrayList("movies");
+        ArrayList<MovieData> updated = new ArrayList<>();
+        try{
+            updated = bundle.getParcelableArrayList("movies");
+        }catch (Exception d){
+            // back to serach if there is no list for fetching
+            onBackPressed();
+        }
+
+        return updated;
     }
 
     @Override
