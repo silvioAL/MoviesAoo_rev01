@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--APP SETTINGS-->
-    <string name="API_KEY">1ac854bf688bf17c51c2ef5b2252dd1a</string>
+    <string name="API_KEY"> "type_key_here" </string>
     <string name="app_name">MoviesAoo</string>
     <string name="PREF_DEF">MoviesAoo_PREFS</string>
     <string name="API_BASE_URL">https://api.themoviedb.org</string>

@@ -24,7 +24,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue "string", "API_BASE_URL", "https://api.themoviedb.org"
 
 
         }
