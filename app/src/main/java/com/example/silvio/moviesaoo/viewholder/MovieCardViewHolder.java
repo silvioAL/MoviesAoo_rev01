@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.silvio.moviesaoo.BR;
-import com.example.silvio.moviesaoo.model.MovieData;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.view.MovieDetailsActivity;
 
 /**

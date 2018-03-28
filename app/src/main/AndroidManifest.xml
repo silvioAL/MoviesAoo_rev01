@@ -7,12 +7,17 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:theme="@style/AppTheme">
+        <activity android:name=".view.LoginActivity" />
+        <activity
+            android:name=".view.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen"
@@ -24,11 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.LoginActivity" />
-        <activity
-            android:name=".view.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MoviesListActivity"
             android:label="@string/title_activity_movies_list"
@@ -39,6 +39,10 @@
             android:label="@string/title_activity_movie_details"
             android:parentActivityName=".view.MoviesListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.UserPreferenceActivity"
+            android:label="@string/title_activity_user_preference"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

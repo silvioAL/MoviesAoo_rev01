@@ -4,15 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.silvio.moviesaoo.R;
+import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetMoviesReviewsResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetSelectedGenreMoviesListResponseModel;
+import com.example.silvio.moviesaoo.data.model.LoginResponseModel;
+import com.example.silvio.moviesaoo.data.model.SearchMovieResponseModel;
+import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.interfaces.NetworkServicesInterfaces;
-import com.example.silvio.moviesaoo.model.GetMoviesGenresResponseModel;
-import com.example.silvio.moviesaoo.model.GetSelectedGenreMoviesListResponseModel;
-import com.example.silvio.moviesaoo.model.LoginResponseModel;
-import com.example.silvio.moviesaoo.model.SearchMovieResponseModel;
 import com.example.silvio.moviesaoo.util.GenericJsonParser;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -20,7 +22,7 @@ import retrofit2.Retrofit;
 /**
  * Created by silvio on 19/12/2017.
  */
-@Singleton
+@MoviesAppScope
 public class AccountServices extends ServiceErrorHandler {
 
     @Inject
@@ -73,6 +75,14 @@ public class AccountServices extends ServiceErrorHandler {
 
     public Call<SearchMovieResponseModel> getTopRatedMovies(String APIKEY, String word){
         return retrofit.create(NetworkServicesInterfaces.class).getTopRatedMovies(APIKEY, word);
+    }
+
+    public Call<GetMovieTrailersResponseModel> getMovieTrailers(String APIKEY, String movieID) {
+        return retrofit.create(NetworkServicesInterfaces.class).getMovieTrailers(movieID, APIKEY);
+    }
+
+    public Call<GetMoviesReviewsResponseModel> getMovieReviews(String APIKEY, String movieID) {
+        return retrofit.create(NetworkServicesInterfaces.class).getMovieReviews(movieID, APIKEY);
     }
 
 }

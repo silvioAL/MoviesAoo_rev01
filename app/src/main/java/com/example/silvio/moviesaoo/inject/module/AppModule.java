@@ -1,13 +1,10 @@
 package com.example.silvio.moviesaoo.inject.module;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.example.silvio.moviesaoo.MainApplication;
+import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.util.FontManager;
-
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,7 +13,7 @@ import dagger.Provides;
  * Created by silvio on 13/12/2017.
  */
 
-@Module
+@Module(includes = ContextModule.class)
 public class AppModule {
 
     private final MainApplication application;
@@ -26,19 +23,14 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
+    @MoviesAppScope
     public Application provideApplication() {
         return application;
     }
 
-    @Provides
-    @Singleton
-    public Context provideContext() {
-        return application;
-    }
 
     @Provides
-    @Singleton
+    @MoviesAppScope
     public FontManager provideFontManager(){ return new FontManager(application);}
 }
 

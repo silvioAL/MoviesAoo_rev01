@@ -1,17 +1,19 @@
 package com.example.silvio.moviesaoo.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Menu;
 
 import com.example.silvio.moviesaoo.MainApplication;
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.adapter.MoviesListAdapter;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.databinding.ActivityMoviesListBinding;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.MoviesListInteraction;
-import com.example.silvio.moviesaoo.model.MovieData;
 import com.example.silvio.moviesaoo.viewmodel.MoviesListViewModel;
 
 import java.util.ArrayList;
@@ -37,12 +39,19 @@ public class MoviesListActivity extends GenericActivity implements ContextIntera
         listViewModel.setStringInteraction(this);
         listViewModel.setInteraction(this);
         listViewModel.setupData();
+
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         listViewModel.setupData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     private void injectDependencies() {
@@ -55,13 +64,13 @@ public class MoviesListActivity extends GenericActivity implements ContextIntera
     }
 
     @Override
-    public ArrayList<MovieData> getMoviesList() {
-        Bundle bundle = getIntent().getBundleExtra("bundle");
+    public ArrayList<MovieData> getMoviesList(Intent intent) {
+
+        Bundle bundle = intent.getBundleExtra("bundle");
         ArrayList<MovieData> updated = new ArrayList<>();
-        try{
-            updated = bundle.getParcelableArrayList("movies");
+        try {
+            updated = (ArrayList<MovieData>) bundle.getSerializable("movies");
         }catch (Exception d){
-            // back to serach if there is no list for fetching
             onBackPressed();
         }
 
@@ -76,5 +85,10 @@ public class MoviesListActivity extends GenericActivity implements ContextIntera
         binding.rvMovies.setAdapter(adapter);
         binding.rvMovies.setHasFixedSize(true);
         adapter.updateList(updated);
+    }
+
+    @Override
+    public Intent getExtras() {
+        return getIntent();
     }
 }

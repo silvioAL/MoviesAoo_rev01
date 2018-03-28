@@ -1,33 +1,43 @@
 package com.example.silvio.moviesaoo.viewmodel;
 
+import android.arch.lifecycle.ViewModel;
 import android.content.Intent;
-import android.databinding.BaseObservable;
+import android.database.Cursor;
 import android.databinding.ObservableField;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.silvio.moviesaoo.R;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
+import com.example.silvio.moviesaoo.data.local.dao.DAOService;
+import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetSelectedGenreMoviesListResponseModel;
+import com.example.silvio.moviesaoo.data.model.MovieGenre;
+import com.example.silvio.moviesaoo.data.model.SearchMovieResponseModel;
+import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.GenericNotification;
 import com.example.silvio.moviesaoo.interfaces.GenericStringInteraction;
 import com.example.silvio.moviesaoo.interfaces.HomeInteraction;
-import com.example.silvio.moviesaoo.model.GetMoviesGenresResponseModel;
-import com.example.silvio.moviesaoo.model.GetSelectedGenreMoviesListResponseModel;
-import com.example.silvio.moviesaoo.model.MovieData;
-import com.example.silvio.moviesaoo.model.MovieGenre;
-import com.example.silvio.moviesaoo.model.SearchMovieResponseModel;
 import com.example.silvio.moviesaoo.service.APIError;
 import com.example.silvio.moviesaoo.service.AccountApp;
 import com.example.silvio.moviesaoo.service.AccountServices;
+import com.example.silvio.moviesaoo.util.PreferenceStorageUtil;
 import com.example.silvio.moviesaoo.view.LoginActivity;
 import com.example.silvio.moviesaoo.view.MoviesListActivity;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,8 +46,8 @@ import retrofit2.Response;
  * Created by silvio on 24/12/2017.
  */
 
-@Singleton
-public class HomeViewModel extends BaseObservable {
+@MoviesAppScope
+public class HomeViewModel extends ViewModel {
 
     public ObservableField<String> movieName = new ObservableField<String>();
     public ObservableField<String> movieGenre = new ObservableField<String>();
@@ -48,10 +58,12 @@ public class HomeViewModel extends BaseObservable {
     private ContextInteraction contextInteraction;
     private HomeInteraction interaction;
     private GetMoviesGenresResponseModel genreslist;
+    private DAOService daoService;
 
     @Inject
-    public HomeViewModel(AccountServices services) {
+    public HomeViewModel(AccountServices services, DAOService daoService) {
         this.services = services;
+        this.daoService = daoService;
     }
 
     public void setNotification(GenericNotification notification) {
@@ -113,7 +125,6 @@ public class HomeViewModel extends BaseObservable {
                             .getStringFromResource(R.string.select_a_title_or_choose_genre)
                     , Toast.LENGTH_LONG).show();
         } else
-
             //query for genre if there is not text
             if (!movieGenre.get().isEmpty() && movieName.get() == null) {
                 String genreId = extractSelectedGenreId(interaction.getGenreSelection());
@@ -129,9 +140,9 @@ public class HomeViewModel extends BaseObservable {
     private void getSelection() {
 
         notification.showLoading();
-        if(!getByRating.get()) {
+        if (!getByRating.get()) {
             getMoviesByPopularity();
-        }else {
+        } else {
             getMoviesByRating();
         }
     }
@@ -221,8 +232,6 @@ public class HomeViewModel extends BaseObservable {
                                 , stringInteraction.getStringFromResource(R.string.could_not_find_movies_genre)
                                 , Toast.LENGTH_SHORT).show();
                         notification.hideLoading();
-                    } else {
-                        notification.hideLoading();
                         redirectToFoundMoviesList(listOfMovies);
                     }
 
@@ -241,13 +250,74 @@ public class HomeViewModel extends BaseObservable {
         });
     }
 
+    private boolean checkPreferences() {
+        PreferenceStorageUtil preferenceStorageUtil = new PreferenceStorageUtil(contextInteraction.getContext());
+        return preferenceStorageUtil.retrieveFilteringMode();
+    }
+
+
     private void redirectToFoundMoviesList(ArrayList<MovieData> listOfMovies) {
 
         Intent intent = new Intent(contextInteraction.getContext(), MoviesListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("movies", listOfMovies);
-        intent.putExtra("bundle", bundle);
-        contextInteraction.getContext().startActivity(intent);
+
+
+        if (checkPreferences()) {
+            final Observable generate = Observable.create((ObservableOnSubscribe) e -> {
+                Cursor cursors = daoService.getAllMovies();
+
+                cursors.moveToFirst();
+
+                ArrayList<MovieData> filtered = new ArrayList<>();
+
+                while (cursors.moveToNext()) {
+
+                    String movieTile = cursors.getString(cursors.getColumnIndex("title"));
+
+                    for (MovieData movieData : listOfMovies) {
+
+                        if (movieData.getTitle().contentEquals(movieTile) || movieData.getOriginal_title().contentEquals(movieTile)) {
+                            filtered.add(movieData);
+                        }
+                    }
+                }
+
+                bundle.putSerializable("movies", filtered);
+                intent.putExtra("bundle", bundle);
+
+                contextInteraction.getContext().startActivity(intent);
+
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+            generate.subscribe(new Observer() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    Log.d(">>>", "SUBSCRIBED");
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    Log.d(">>>", "NEXT");
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onComplete() {
+                    Log.d(">>>", "COMPLETED");
+                }
+            });
+
+        } else {
+
+            bundle.putSerializable("movies", listOfMovies);
+            intent.putExtra("bundle", bundle);
+
+            contextInteraction.getContext().startActivity(intent);
+        }
     }
 
     private String extractSelectedGenreId(String selectedTitle) {

@@ -1,5 +1,6 @@
-package com.example.silvio.moviesaoo.model;
+package com.example.silvio.moviesaoo.data.model;
 
+import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.example.silvio.moviesaoo.interfaces;
 
-import com.example.silvio.moviesaoo.model.GetMoviesGenresResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
 
 /**
  * Created by silvio on 24/12/2017.

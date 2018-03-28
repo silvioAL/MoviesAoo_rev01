@@ -5,10 +5,11 @@ import android.databinding.BaseObservable;
 import android.os.CountDownTimer;
 
 import com.example.silvio.moviesaoo.R;
+import com.example.silvio.moviesaoo.data.model.LoginResponseModel;
+import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.GenericNotification;
 import com.example.silvio.moviesaoo.interfaces.GenericStringInteraction;
-import com.example.silvio.moviesaoo.model.LoginResponseModel;
 import com.example.silvio.moviesaoo.service.APIError;
 import com.example.silvio.moviesaoo.service.AccountApp;
 import com.example.silvio.moviesaoo.service.AccountServices;
@@ -17,7 +18,6 @@ import com.example.silvio.moviesaoo.view.HomeActivity;
 import com.example.silvio.moviesaoo.view.LoginActivity;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +27,7 @@ import retrofit2.Response;
  * Created by silvio on 19/12/2017.
  */
 
-@Singleton
+@MoviesAppScope
 public class LoginActivityViewModel extends BaseObservable {
 
     AccountServices services;

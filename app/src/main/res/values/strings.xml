@@ -53,5 +53,18 @@
     <string name="rating">Nota: </string>
     <string name="vote_count">Quantidade de votos: </string>
     <string name="original_title">Título original: </string>
+    <string name="title_activity_samp">SampActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_user_preference">UserPreferenceActivity</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites">favorites</string>
+    <string name="click_to_see_trailer">click here and see trailer</string>
+    <string name="trailers">Trailers</string>
+    <string name="users_ratings">Avaliações de usuários</string>
 
 </resources>

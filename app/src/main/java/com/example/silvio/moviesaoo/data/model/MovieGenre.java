@@ -1,4 +1,4 @@
-package com.example.silvio.moviesaoo.model;
+package com.example.silvio.moviesaoo.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

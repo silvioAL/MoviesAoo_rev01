@@ -2,7 +2,7 @@ package com.example.silvio.moviesaoo.service;
 
 import android.support.annotation.Nullable;
 
-import com.example.silvio.moviesaoo.model.BearerHolder;
+import com.example.silvio.moviesaoo.data.model.BearerHolder;
 
 import java.io.IOException;
 

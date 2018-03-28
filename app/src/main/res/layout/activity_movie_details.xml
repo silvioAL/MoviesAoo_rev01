@@ -2,216 +2,280 @@
 
     <data>
 
+        <import type="android.view.View" />
         <variable
             name="movie"
             type="com.example.silvio.moviesaoo.viewmodel.MovieDetailsViewModel" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:orientation="vertical"
-            tools:context="com.example.silvio.moviesaoo.view.MovieDetailsActivity">
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:onClick="@{()->movie.saveAsFavorite()}"
+            app:srcCompat="@drawable/ic_star_black_24dp" />
 
-            <ImageView
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:layout_margin="15dp"
-                app:imageUrl="@{movie.movieImgUrl}"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:orientation="vertical"
+                tools:context="com.example.silvio.moviesaoo.view.MovieDetailsActivity">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_margin="15dp"
+                    app:imageUrl="@{movie.movieImgUrl}" />
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/title"
+                        android:layout_toRightOf="@+id/title"
+                        android:text="@{movie.title}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/lenguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/original_lg"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/lenguage"
+                        android:layout_toRightOf="@+id/lenguage"
+                        android:text="@{movie.originalLenguage}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/original_ttl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/original_title"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/original_ttl"
+                        android:layout_toRightOf="@id/original_ttl"
+                        android:text="@{movie.originalTitle}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/overview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/overview"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/overview"
+                        android:layout_toRightOf="@id/overview"
+                        android:text="@{movie.overview}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/release"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/release_date"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/release"
+                        android:layout_toRightOf="@id/release"
+                        android:text="@{movie.releaseDate}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/popularity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/popularity"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/popularity"
+                        android:layout_toRightOf="@id/popularity"
+                        android:text="@{movie.popularity}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/votesaverega"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rating"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/votesaverega"
+                        android:layout_toRightOf="@id/votesaverega"
+                        android:text="@{movie.voteAvarage}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
+                    android:layout_marginBottom="15dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/votecount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vote_count"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toEndOf="@id/votecount"
+                        android:layout_toRightOf="@id/votecount"
+                        android:text="@{movie.voteCount}"
+                        android:textColor="@color/black"
+                        app:font="@{@string/m_bold}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/title"
-                    android:layout_toRightOf="@+id/title"
-                    android:text="@{movie.title}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
+                    android:layout_marginBottom="75dp"
+                    android:gravity="center"
+                    android:onClick="@{()->movie.openMovie()}">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/title_trailers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@string/trailers"
+                        android:textColor="@color/black"
+                        android:visibility="@{movie.hasTrailer ? View.VISIBLE : View.GONE}"
+                        app:font="@{@string/m_bold}" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_trailers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title_trailers"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="@{movie.hasTrailer ? View.VISIBLE : View.GONE}" />
 
-                <TextView
-                    android:id="@+id/lenguage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/original_lg"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
+                    <TextView
+                        android:id="@+id/users_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rv_trailers"
+                        android:text="@string/users_ratings"
+                        android:visibility="@{movie.hasReview ? View.VISIBLE : View.GONE}" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/lenguage"
-                    android:layout_toRightOf="@+id/lenguage"
-                    android:text="@{movie.originalLenguage}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_ratings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/users_reviews"
+                        android:orientation="vertical"
+                        android:visibility="@{movie.hasReview ? View.VISIBLE : View.GONE}" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/original_ttl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/original_title"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
+        </android.support.v4.widget.NestedScrollView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/original_ttl"
-                    android:layout_toRightOf="@id/original_ttl"
-                    android:text="@{movie.originalTitle}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/overview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/overview"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/overview"
-                    android:layout_toRightOf="@id/overview"
-                    android:text="@{movie.overview}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/release"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/release_date"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/release"
-                    android:layout_toRightOf="@id/release"
-                    android:text="@{movie.releaseDate}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/popularity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/popularity"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/popularity"
-                    android:layout_toRightOf="@id/popularity"
-                    android:text="@{movie.popularity}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/votesaverega"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rating"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/votesaverega"
-                    android:layout_toRightOf="@id/votesaverega"
-                    android:text="@{movie.voteAvarage}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/votecount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/vote_count"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_toEndOf="@id/votecount"
-                    android:layout_toRightOf="@id/votecount"
-                    android:text="@{movie.voteCount}"
-                    android:textColor="@color/black"
-                    app:font="@{@string/m_bold}" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-    </ScrollView>
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

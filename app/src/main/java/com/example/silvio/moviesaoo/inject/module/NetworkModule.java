@@ -2,6 +2,7 @@ package com.example.silvio.moviesaoo.inject.module;
 
 import android.app.Application;
 
+import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.service.BearerAuthenticator;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -14,8 +15,6 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -39,14 +38,14 @@ public class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @MoviesAppScope
     public Cache provideHttpCache(Application application) {
         int cacheSize = 10 * 1024 * 1024;
         return new Cache(application.getCacheDir(), cacheSize);
     }
 
     @Provides
-    @Singleton
+    @MoviesAppScope
     public Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
@@ -61,9 +60,8 @@ public class NetworkModule {
     }
 
     @Provides
+    @MoviesAppScope
     public OkHttpClient provideOkhttpClient(Cache cache) {
-
-        //FIXME RETIRAR INTERCEPTOR
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
 
@@ -80,7 +78,7 @@ public class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @MoviesAppScope
     public Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))

@@ -1,9 +1,11 @@
 package com.example.silvio.moviesaoo.interfaces;
 
-import com.example.silvio.moviesaoo.model.GetMoviesGenresResponseModel;
-import com.example.silvio.moviesaoo.model.GetSelectedGenreMoviesListResponseModel;
-import com.example.silvio.moviesaoo.model.LoginResponseModel;
-import com.example.silvio.moviesaoo.model.SearchMovieResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetMoviesReviewsResponseModel;
+import com.example.silvio.moviesaoo.data.model.GetSelectedGenreMoviesListResponseModel;
+import com.example.silvio.moviesaoo.data.model.LoginResponseModel;
+import com.example.silvio.moviesaoo.data.model.SearchMovieResponseModel;
 import com.example.silvio.moviesaoo.service.DefaultResponse;
 
 import retrofit2.Call;
@@ -31,5 +33,11 @@ public interface NetworkServicesInterfaces {
 
     @GET("3/movie/top_rated")
     Call<SearchMovieResponseModel> getTopRatedMovies(@Query("api_key") String apikey, @Query("query") String queryWord);
+
+    @GET("3/movie/{movie_id}/videos")
+    Call<GetMovieTrailersResponseModel> getMovieTrailers(@Path("movie_id") String movie_id, @Query("api_key") String apikey);
+
+    @GET("3/movie/{movie_id}/reviews")
+    Call<GetMoviesReviewsResponseModel> getMovieReviews(@Path("movie_id") String movie_id, @Query("api_key") String apikey);
 
 }

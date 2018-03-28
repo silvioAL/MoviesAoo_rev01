@@ -1,19 +1,22 @@
 package com.example.silvio.moviesaoo.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.silvio.moviesaoo.MainApplication;
 import com.example.silvio.moviesaoo.R;
-import com.example.silvio.moviesaoo.databinding.ActivityHomeBinding;
+import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
+import com.example.silvio.moviesaoo.data.model.MovieGenre;
+import com.example.silvio.moviesaoo.databinding.ContentActivityHomeBinding;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.HomeInteraction;
-import com.example.silvio.moviesaoo.model.GetMoviesGenresResponseModel;
-import com.example.silvio.moviesaoo.model.MovieGenre;
 import com.example.silvio.moviesaoo.viewmodel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -25,12 +28,12 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
 
     @Inject
     HomeViewModel homeViewModel;
-    ActivityHomeBinding binding;
+    ContentActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        binding = DataBindingUtil.setContentView(this, R.layout.content_activity_home);
         injectDependencies();
         binding.setHomeViewModel(homeViewModel);
         homeViewModel.setNotification(this);
@@ -38,6 +41,27 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
         homeViewModel.setInteraction(this);
         homeViewModel.setHomeInteraction(this);
         homeViewModel.loadMovieGenres();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, UserPreferenceActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void injectDependencies() {

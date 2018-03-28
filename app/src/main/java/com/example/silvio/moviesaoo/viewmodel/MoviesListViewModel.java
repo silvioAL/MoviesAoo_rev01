@@ -3,38 +3,28 @@ package com.example.silvio.moviesaoo.viewmodel;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
-import android.os.Bundle;
-import android.os.CountDownTimer;
 
-import com.example.silvio.moviesaoo.R;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
+import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.GenericNotification;
 import com.example.silvio.moviesaoo.interfaces.GenericStringInteraction;
 import com.example.silvio.moviesaoo.interfaces.MoviesListInteraction;
-import com.example.silvio.moviesaoo.model.GetSelectedGenreMoviesListResponseModel;
-import com.example.silvio.moviesaoo.model.MovieData;
-import com.example.silvio.moviesaoo.model.SearchMovieResponseModel;
-import com.example.silvio.moviesaoo.service.APIError;
 import com.example.silvio.moviesaoo.service.AccountServices;
-import com.example.silvio.moviesaoo.view.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by silvio on 25/12/2017.
  */
 
-@Singleton
+@MoviesAppScope
 public class MoviesListViewModel extends BaseObservable {
 
+    public ObservableField<Boolean> sortByPopularity = new ObservableField<>(false);
     private AccountServices services;
     private GenericNotification notification;
     private GenericStringInteraction stringInteraction;
@@ -43,7 +33,6 @@ public class MoviesListViewModel extends BaseObservable {
     private ObservableField<String> movieGenreKeyWord = new ObservableField<>();
     private MoviesListInteraction interaction;
     private ArrayList<MovieData> movies;
-    public ObservableField<Boolean> sortByPopularity = new ObservableField<>(false);
 
     @Inject
     public MoviesListViewModel(AccountServices services) {
@@ -69,7 +58,7 @@ public class MoviesListViewModel extends BaseObservable {
     public ArrayList<MovieData> sortList() {
 
         notification.showLoading();
-        retrieveMoviesList();
+        retrieveMoviesList(interaction.getExtras());
         ArrayList<MovieData> listToSort = movies;
 
         if (sortByPopularity.get()) {
@@ -92,8 +81,8 @@ public class MoviesListViewModel extends BaseObservable {
     }
 
 
-    public void retrieveMoviesList() {
-        movies = interaction.getMoviesList();
+    public void retrieveMoviesList(Intent intent) {
+        movies = interaction.getMoviesList(intent);
     }
 
     public void setupData() {

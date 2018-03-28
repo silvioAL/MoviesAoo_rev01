@@ -1,4 +1,4 @@
-package com.example.silvio.moviesaoo.model;
+package com.example.silvio.moviesaoo.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,7 +21,4 @@ public class LoginResponseModel {
         this.bearer = bearer;
     }
 
-    public String getBearer() {
-        return bearer;
-    }
 }

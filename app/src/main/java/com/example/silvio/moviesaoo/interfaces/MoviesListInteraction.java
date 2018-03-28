@@ -1,6 +1,8 @@
 package com.example.silvio.moviesaoo.interfaces;
 
-import com.example.silvio.moviesaoo.model.MovieData;
+import android.content.Intent;
+
+import com.example.silvio.moviesaoo.data.entity.MovieData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
  */
 
 public interface MoviesListInteraction {
-    ArrayList<MovieData> getMoviesList();
+    ArrayList<MovieData> getMoviesList(Intent intent);
     void fetchList(List<MovieData> updated);
+
+    Intent getExtras();
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.silvio.moviesaoo.R;
-import com.example.silvio.moviesaoo.model.MovieData;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.viewholder.MovieCardViewHolder;
 
 import java.util.List;
