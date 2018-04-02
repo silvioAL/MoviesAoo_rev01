@@ -67,9 +67,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     //HEX
     compile 'commons-codec:commons-codec:1.10'
-    // Architecture Component - Room
-    compile 'android.arch.persistence.room:runtime:1.1.0-alpha2'
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.0-alpha2"
     // Lifecyles, LiveData and ViewModel
     compile 'android.arch.lifecycle:runtime:1.1.0'
     compile 'android.arch.lifecycle:extensions:1.1.0'

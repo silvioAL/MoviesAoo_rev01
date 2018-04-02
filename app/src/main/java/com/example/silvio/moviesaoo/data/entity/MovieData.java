@@ -1,14 +1,7 @@
 package com.example.silvio.moviesaoo.data.entity;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 
-import com.example.silvio.moviesaoo.data.local.AppContract;
-import com.example.silvio.moviesaoo.util.RoomTypeConverter;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -18,57 +11,38 @@ import java.util.ArrayList;
  * Created by silvio on 25/12/2017.
  */
 
-@Entity(tableName = AppContract.TABLE_NAME, indices = {@Index(value = "dbId", unique = true)})
-@TypeConverters({RoomTypeConverter.class})
+
 public class MovieData implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "dbId")
     private Integer dbId;
     @SerializedName("id")
-    @ColumnInfo(name = "movie_id")
     private Integer movieId;
     @SerializedName("adult")
-    @ColumnInfo(name = "adult")
     private boolean adult;
     @SerializedName("backdrop_path")
-    @ColumnInfo(name = "backdrop_path")
     private String backdrop_path;
     @SerializedName("genre_ids")
-    @ColumnInfo(name = "genre_ids")
-    @TypeConverters({RoomTypeConverter.class})
     private ArrayList<String> genre_ids;
     @SerializedName("original_language")
-    @ColumnInfo(name = "original_language")
     private String original_language;
     @SerializedName("original_title")
-    @ColumnInfo(name = "original_title")
     private String original_title;
     @SerializedName("overview")
-    @ColumnInfo(name = "overview")
     private String overview;
     @SerializedName("release_date")
-    @ColumnInfo(name = "release_date")
     private String release_date;
     @SerializedName("poster_path")
-    @ColumnInfo(name = "poster_path")
     private String poster_path;
     @SerializedName("popularity")
-    @ColumnInfo(name = "popularity")
     private String popularity;
     @SerializedName("title")
-    @ColumnInfo(name = "title")
     private String title;
     @SerializedName("video")
-    @ColumnInfo(name = "video")
     private String video;
     @SerializedName("vote_average")
-    @ColumnInfo(name = "vote_average")
     private String vote_average;
     @SerializedName("vote_count")
-    @ColumnInfo(name = "vote_count")
     private String vote_count;
-    @ColumnInfo(name = "isFavorite")
     private Boolean isFavorite;
 
 
@@ -95,10 +69,10 @@ public class MovieData implements Serializable {
         this.isFavorite = false;
     }
 
-    @Ignore
     public MovieData() {
 
     }
+
 
     public Integer getMovieId() {
         return movieId;

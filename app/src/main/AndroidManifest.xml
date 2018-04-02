@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:authorities="com.example.silvio.moviesaoo"
+            android:name=".data.local.MoviesProvider" />
         <activity android:name=".view.LoginActivity" />
         <activity
             android:name=".view.HomeActivity"

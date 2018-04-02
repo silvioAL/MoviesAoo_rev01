@@ -18,15 +18,21 @@ public class AppContract {
 
     //DATA TABLE CONSTANTS
     public static final String _ID = BaseColumns._ID;
+    public static final String COLUMN_MOVIE_ID = "MOVIEID";
+    public static final String COLUMN_ADULT = "ADULT";
+    public static final String COLUMN_BACKDROP_PATH = "BACKDROPPATH";
+    public static final String COLUMN_GENRE_IDS = "GENREIDS";
+    public static final String COLUMN_POSTER_PATH = "POSTERPATH";
+    public static final String COLUMN_VIDEO = "VIDEO";
     public static final String COLUMN_TILTE = "TITLE";
-    public static final String COLUMN_ORIGINAL_LENGUAGE = "ORIGINAL_LENG";
-    public static final String COLUMN_ORIGINAL_TITLE = "ORIGINAL_TITLE";
+    public static final String COLUMN_ORIGINAL_LENGUAGE = "ORIGINALLENG";
+    public static final String COLUMN_ORIGINAL_TITLE = "ORIGINALTITLE";
     public static final String COLUMN_OVERVIEW = "OVERVIEW";
-    public static final String COLUMN_RELEASE_DATE = "RELEASE_DATE";
+    public static final String COLUMN_RELEASE_DATE = "RELEASEDATE";
     public static final String COLUMN_POPULARITY = "POPULARITY";
     public static final String COLUMN_VOTE_AVERAGE = "VOTE_AVERAGE";
     public static final String COLUMN_VOTE_COUNT = "VOTE_COUNT";
-    public static final String COLUMN_MOVIE_IMG_URL = "MOVIE_IMG_URL";
+    public static final String COLUMN_MOVIE_IMG_URL = "MOVIEIMGURL";
     public static final String CONTENT_AUTHORITY = "com.example.silvio.moviesaoo";
 
     //URI MATCHERS QUERY CODE TYPE

@@ -2,6 +2,8 @@ package com.example.silvio.moviesaoo.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.content.ActivityNotFoundException;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.databinding.ObservableField;
 import android.net.Uri;
@@ -10,7 +12,8 @@ import android.widget.Toast;
 
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.data.entity.MovieData;
-import com.example.silvio.moviesaoo.data.local.dao.DAOService;
+import com.example.silvio.moviesaoo.data.local.AppContract;
+import com.example.silvio.moviesaoo.data.local.dao.DaoHelper;
 import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseBlock;
 import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseModel;
 import com.example.silvio.moviesaoo.data.model.GetMoviesReviewsResponseModel;
@@ -20,6 +23,7 @@ import com.example.silvio.moviesaoo.interfaces.GenericNotification;
 import com.example.silvio.moviesaoo.interfaces.GenericStringInteraction;
 import com.example.silvio.moviesaoo.interfaces.MoviesDetailsInteraction;
 import com.example.silvio.moviesaoo.service.AccountServices;
+import com.example.silvio.moviesaoo.util.ContentValuesParser;
 import com.example.silvio.moviesaoo.util.StringUtil;
 import com.example.silvio.moviesaoo.view.LoginActivity;
 
@@ -55,7 +59,6 @@ public class MovieDetailsViewModel extends ViewModel {
     public ObservableField<Boolean> hasReview = new ObservableField<>();
     public ObservableField<String> movieImgUrl = new ObservableField<>();
 
-    private DAOService daoServices;
     private AccountServices services;
     private GenericStringInteraction stringInteraction;
     private String movieId;
@@ -67,9 +70,8 @@ public class MovieDetailsViewModel extends ViewModel {
     private MovieData currentMovie;
 
     @Inject
-    public MovieDetailsViewModel(AccountServices accountServices, DAOService daoService) {
+    public MovieDetailsViewModel(AccountServices accountServices) {
         services = accountServices;
-        daoServices = daoService;
     }
 
     public void setStringInteraction(GenericStringInteraction stringInteraction) {
@@ -202,7 +204,8 @@ public class MovieDetailsViewModel extends ViewModel {
 
         final io.reactivex.Observable save = io.reactivex.Observable.create((ObservableOnSubscribe) e -> {
 
-            daoServices.putMovie(currentMovie);
+            ContentResolver resolver = contextInteraction.getContext().getContentResolver();
+            resolver.insert(AppContract.CONTENT_URI, ContentValuesParser.convertMovieDetailsToDBValues(currentMovie));
 
         }).subscribeOn(Schedulers.io()).observeOn(Schedulers.single().when(flowableFlowable -> new Completable() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.silvio.moviesaoo.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.ObservableField;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.data.entity.MovieData;
-import com.example.silvio.moviesaoo.data.local.dao.DAOService;
+import com.example.silvio.moviesaoo.data.local.AppContract;
 import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
 import com.example.silvio.moviesaoo.data.model.GetSelectedGenreMoviesListResponseModel;
 import com.example.silvio.moviesaoo.data.model.MovieGenre;
@@ -25,6 +26,7 @@ import com.example.silvio.moviesaoo.service.APIError;
 import com.example.silvio.moviesaoo.service.AccountApp;
 import com.example.silvio.moviesaoo.service.AccountServices;
 import com.example.silvio.moviesaoo.util.PreferenceStorageUtil;
+import com.example.silvio.moviesaoo.util.ProjectionHelper;
 import com.example.silvio.moviesaoo.view.LoginActivity;
 import com.example.silvio.moviesaoo.view.MoviesListActivity;
 
@@ -58,12 +60,10 @@ public class HomeViewModel extends ViewModel {
     private ContextInteraction contextInteraction;
     private HomeInteraction interaction;
     private GetMoviesGenresResponseModel genreslist;
-    private DAOService daoService;
 
     @Inject
-    public HomeViewModel(AccountServices services, DAOService daoService) {
+    public HomeViewModel(AccountServices services) {
         this.services = services;
-        this.daoService = daoService;
     }
 
     public void setNotification(GenericNotification notification) {
@@ -264,15 +264,18 @@ public class HomeViewModel extends ViewModel {
 
         if (checkPreferences()) {
             final Observable generate = Observable.create((ObservableOnSubscribe) e -> {
-                Cursor cursors = daoService.getAllMovies();
+
+                ContentResolver resolver = contextInteraction.getContext().getContentResolver();
+                Cursor cursors = resolver.query(AppContract.CONTENT_URI, ProjectionHelper.getMovieDetailsProjection(), null, null, null);
 
                 cursors.moveToFirst();
+                int INDEX = cursors.getColumnIndex(AppContract.COLUMN_TILTE);
 
                 ArrayList<MovieData> filtered = new ArrayList<>();
 
                 while (cursors.moveToNext()) {
 
-                    String movieTile = cursors.getString(cursors.getColumnIndex("title"));
+                    String movieTile = cursors.getString(INDEX);
 
                     for (MovieData movieData : listOfMovies) {
 

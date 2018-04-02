@@ -3,6 +3,7 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="movie"
             type="com.example.silvio.moviesaoo.viewmodel.MovieDetailsViewModel" />
@@ -240,7 +241,7 @@
                         android:layout_margin="5dp"
                         android:text="@string/trailers"
                         android:textColor="@color/black"
-                        android:visibility="@{movie.hasTrailer ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{safeUnbox(movie.hasTrailer ? View.VISIBLE : View.GONE)}"
                         app:font="@{@string/m_bold}" />
 
                     <android.support.v7.widget.RecyclerView
@@ -252,7 +253,7 @@
                         android:orientation="horizontal"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:visibility="@{movie.hasTrailer ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{safeUnbox(movie.hasTrailer ? View.VISIBLE : View.GONE)}" />
 
                     <TextView
                         android:id="@+id/users_reviews"
@@ -260,7 +261,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rv_trailers"
                         android:text="@string/users_ratings"
-                        android:visibility="@{movie.hasReview ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{safeUnbox(movie.hasReview ? View.VISIBLE : View.GONE)}" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_ratings"
@@ -268,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/users_reviews"
                         android:orientation="vertical"
-                        android:visibility="@{movie.hasReview ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{safeUnbox(movie.hasReview ? View.VISIBLE : View.GONE)}" />
 
                 </RelativeLayout>
 
