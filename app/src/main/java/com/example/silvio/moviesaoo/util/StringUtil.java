@@ -1,7 +1,5 @@
 package com.example.silvio.moviesaoo.util;
 
-import android.annotation.SuppressLint;
-
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -16,7 +14,7 @@ public class StringUtil {
 
     public static String formateDateFromServerResource(String originDate) {
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         SimpleDateFormat sdfWithoudHours = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat output = new SimpleDateFormat("dd-MM-yyyy");
         Date d = null;
@@ -44,7 +42,7 @@ public class StringUtil {
         ParsePosition pos = new ParsePosition(0);
         Locale ptBr = new Locale("pt", "BR");
         SimpleDateFormat simpledateformat = new SimpleDateFormat("yyy-MM-dd", ptBr);
-        return (Date)simpledateformat.parse(fulldate, pos);
+        return simpledateformat.parse(fulldate, pos);
     }
 
 }

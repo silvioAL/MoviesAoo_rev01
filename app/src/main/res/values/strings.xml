@@ -66,5 +66,8 @@
     <string name="click_to_see_trailer">click here and see trailer</string>
     <string name="trailers">Trailers</string>
     <string name="users_ratings">Avaliações de usuários</string>
+    <string name="tp_rated">Melhor avaliados</string>
+    <string name="most_pop">Mais populares</string>
+    <string name="filter">Filtro</string>
 
 </resources>

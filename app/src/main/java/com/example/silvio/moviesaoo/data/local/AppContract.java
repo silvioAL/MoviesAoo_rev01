@@ -40,6 +40,9 @@ public class AppContract {
     public static final Integer SOME_ITEMS_QUERY_TYPE = 7236;
 
     //CONTENT CONSTANTS
+    public static final String RATING_CRITERIA = "RATING";
+    public static final String POPULAR_CRITERIA = "POPULAR";
+    public static final String SAVED_CRITERIA = "SAVED";
     public static final String MOVIES_APPREF = "MOVIES";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_ITEM = "MOVIES";

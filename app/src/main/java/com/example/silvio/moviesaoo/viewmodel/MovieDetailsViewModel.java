@@ -2,7 +2,6 @@ package com.example.silvio.moviesaoo.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.content.ActivityNotFoundException;
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.databinding.ObservableField;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.data.local.AppContract;
-import com.example.silvio.moviesaoo.data.local.dao.DaoHelper;
 import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseBlock;
 import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseModel;
 import com.example.silvio.moviesaoo.data.model.GetMoviesReviewsResponseModel;
@@ -97,7 +95,9 @@ public class MovieDetailsViewModel extends ViewModel {
         originalLenguage.set(movieData.getOriginal_language());
         originalTitle.set(movieData.getOriginal_title());
         overview.set(movieData.getOverview());
-        releaseDate.set(StringUtil.formateDateFromServerResource(movieData.getRelease_date()));
+        if (!movieData.getRelease_date().isEmpty()) {
+            releaseDate.set(StringUtil.formateDateFromServerResource(movieData.getRelease_date()));
+        }
         popularity.set(movieData.getPopularity());
         voteAvarage.set(movieData.getVote_average());
         voteCount.set(movieData.getVote_count());

@@ -1,25 +1,22 @@
 package com.example.silvio.moviesaoo.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.example.silvio.moviesaoo.MainApplication;
 import com.example.silvio.moviesaoo.R;
-import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
-import com.example.silvio.moviesaoo.data.model.MovieGenre;
+import com.example.silvio.moviesaoo.adapter.MoviesListAdapter;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
+import com.example.silvio.moviesaoo.data.local.AppContract;
 import com.example.silvio.moviesaoo.databinding.ContentActivityHomeBinding;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.HomeInteraction;
 import com.example.silvio.moviesaoo.viewmodel.HomeViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,7 +37,7 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
         homeViewModel.setStringInteraction(this);
         homeViewModel.setInteraction(this);
         homeViewModel.setHomeInteraction(this);
-        homeViewModel.loadMovieGenres();
+        homeViewModel.getMoviesByPopularity();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,12 +50,12 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
 
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, UserPreferenceActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            return true;
+            fetchListBy(AppContract.SAVED_CRITERIA);
+        } else if (id == R.id.popular) {
+            fetchListBy(AppContract.POPULAR_CRITERIA);
+        } else if (id == R.id.top_rated) {
+            fetchListBy(AppContract.RATING_CRITERIA);
         }
 
         return super.onOptionsItemSelected(item);
@@ -74,38 +71,19 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
     }
 
     @Override
-    public void fetchGenres(GetMoviesGenresResponseModel genres) {
-        List<String> genresTitles = new ArrayList<>();
-        genresTitles.clear();
-        genresTitles.add("");
-
-        for (MovieGenre title : genres.getGenreList()) {
-            genresTitles.add(title.getName());
-        }
-
-        ArrayAdapter<String> nAdapter = new ArrayAdapter<String>(getContext()
-                , android.R.layout.simple_spinner_dropdown_item
-                , genresTitles);
-
-        nAdapter.notifyDataSetChanged();
-
-        binding.genresSpinner.setAdapter(nAdapter);
-        binding.genresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                binding.genresSpinner.setSelection(i);
-                homeViewModel.movieGenre.set(getGenreSelection());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                binding.genresSpinner.setSelection(0);
-            }
-        });
+    public void fetchList(List<MovieData> movies) {
+        binding.rvMovies.setAdapter(new MoviesListAdapter(getBaseContext(), movies));
+        binding.rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
     }
 
     @Override
-    public String getGenreSelection() {
-        return binding.genresSpinner.getSelectedItem().toString();
+    public void fetchListBy(String criteria) {
+        if (criteria.equals(AppContract.RATING_CRITERIA)) {
+            homeViewModel.getMoviesByRating();
+        } else if (criteria.equals(AppContract.COLUMN_POPULARITY)) {
+            homeViewModel.getMoviesByPopularity();
+        } else if (criteria.equals(AppContract.SAVED_CRITERIA)) {
+            homeViewModel.getFavorites();
+        }
     }
 }

@@ -16,6 +16,7 @@ import com.example.silvio.moviesaoo.util.GenericJsonParser;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
@@ -69,12 +70,12 @@ public class AccountServices extends ServiceErrorHandler {
         return retrofit.create(NetworkServicesInterfaces.class).getSelectedGenreList(genreId, APIKEY, lenguage);
     }
 
-    public Call<SearchMovieResponseModel> getPopularMovies(String APIKEY, String word){
-        return retrofit.create(NetworkServicesInterfaces.class).getPopularMovies(APIKEY, word);
+    public Observable<SearchMovieResponseModel> getPopularMovies(String APIKEY) {
+        return retrofit.create(NetworkServicesInterfaces.class).getPopularMovies(APIKEY);
     }
 
-    public Call<SearchMovieResponseModel> getTopRatedMovies(String APIKEY, String word){
-        return retrofit.create(NetworkServicesInterfaces.class).getTopRatedMovies(APIKEY, word);
+    public Observable<SearchMovieResponseModel> getTopRatedMovies(String APIKEY) {
+        return retrofit.create(NetworkServicesInterfaces.class).getTopRatedMovies(APIKEY);
     }
 
     public Call<GetMovieTrailersResponseModel> getMovieTrailers(String APIKEY, String movieID) {

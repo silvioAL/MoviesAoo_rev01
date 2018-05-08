@@ -1,6 +1,8 @@
 package com.example.silvio.moviesaoo.interfaces;
 
-import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
+import com.example.silvio.moviesaoo.data.entity.MovieData;
+
+import java.util.List;
 
 /**
  * Created by silvio on 24/12/2017.
@@ -8,6 +10,8 @@ import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
 
 public interface HomeInteraction {
 
-    void fetchGenres(GetMoviesGenresResponseModel genres);
-    String getGenreSelection();
+    void fetchList(List<MovieData> moviesResponseModel);
+
+    void fetchListBy(String criteria);
+
 }

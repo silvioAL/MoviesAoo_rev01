@@ -42,10 +42,6 @@
             android:label="@string/title_activity_movie_details"
             android:parentActivityName=".view.MoviesListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".view.UserPreferenceActivity"
-            android:label="@string/title_activity_user_preference"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

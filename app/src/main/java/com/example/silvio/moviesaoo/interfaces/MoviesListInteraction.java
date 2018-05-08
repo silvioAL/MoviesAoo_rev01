@@ -14,6 +14,5 @@ import java.util.List;
 public interface MoviesListInteraction {
     ArrayList<MovieData> getMoviesList(Intent intent);
     void fetchList(List<MovieData> updated);
-
     Intent getExtras();
 }
