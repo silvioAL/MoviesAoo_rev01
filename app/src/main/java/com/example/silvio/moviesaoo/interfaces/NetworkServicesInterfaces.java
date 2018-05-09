@@ -29,10 +29,10 @@ public interface NetworkServicesInterfaces {
     @GET("3/genre/{genre_id}/movies")
     Call<GetSelectedGenreMoviesListResponseModel> getSelectedGenreList(@Path("genre_id") String genreId, @Query("api_key") String apikey,  @Query("language") String lenguage);
 
-    @GET("3/discover/movie?sort_by=popularity.desc")
+    @GET("3/movie/popular")
     Observable<SearchMovieResponseModel> getPopularMovies(@Query("api_key") String apikey);
 
-    @GET("3/discover/movie?sort_by=vote_average.desc")
+    @GET("3/movie/top_rated")
     Observable<SearchMovieResponseModel> getTopRatedMovies(@Query("api_key") String apikey);
 
     @GET("3/movie/{movie_id}/videos")

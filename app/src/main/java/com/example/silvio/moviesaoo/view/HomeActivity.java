@@ -1,5 +1,7 @@
 package com.example.silvio.moviesaoo.view;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import com.example.silvio.moviesaoo.databinding.ContentActivityHomeBinding;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.HomeInteraction;
 import com.example.silvio.moviesaoo.viewmodel.HomeViewModel;
+import com.example.silvio.moviesaoo.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -23,6 +26,9 @@ import javax.inject.Inject;
 
 public class HomeActivity extends GenericActivity implements ContextInteraction, HomeInteraction {
 
+
+    @Inject
+    ViewModelFactory viewModelFactory;
     @Inject
     HomeViewModel homeViewModel;
     ContentActivityHomeBinding binding;
@@ -32,12 +38,15 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.content_activity_home);
         injectDependencies();
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
         binding.setHomeViewModel(homeViewModel);
         homeViewModel.setNotification(this);
         homeViewModel.setStringInteraction(this);
         homeViewModel.setInteraction(this);
         homeViewModel.setHomeInteraction(this);
-        homeViewModel.getMoviesByPopularity();
+
+        final Observer<List<MovieData>> listObserver = movieData -> fetchList(movieData);
+        homeViewModel.getMoviesByPopularity().observe(this, listObserver);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,8 +81,10 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
 
     @Override
     public void fetchList(List<MovieData> movies) {
-        binding.rvMovies.setAdapter(new MoviesListAdapter(getBaseContext(), movies));
-        binding.rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        if (movies != null) {
+            binding.rvMovies.setAdapter(new MoviesListAdapter(getBaseContext(), movies));
+            binding.rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        }
     }
 
     @Override

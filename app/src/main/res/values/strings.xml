@@ -69,5 +69,6 @@
     <string name="tp_rated">Melhor avaliados</string>
     <string name="most_pop">Mais populares</string>
     <string name="filter">Filtro</string>
+    <string name="favorites_list">Somente favoritos</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.example.silvio.moviesaoo.viewmodel;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -12,7 +13,6 @@ import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.data.local.AppContract;
 import com.example.silvio.moviesaoo.data.model.SearchMovieResponseModel;
-import com.example.silvio.moviesaoo.inject.scopes.MoviesAppScope;
 import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
 import com.example.silvio.moviesaoo.interfaces.GenericNotification;
 import com.example.silvio.moviesaoo.interfaces.GenericStringInteraction;
@@ -38,7 +38,6 @@ import io.reactivex.schedulers.Schedulers;
  * Created by silvio on 24/12/2017.
  */
 
-@MoviesAppScope
 public class HomeViewModel extends ViewModel {
 
     private AccountServices services;
@@ -46,6 +45,7 @@ public class HomeViewModel extends ViewModel {
     private GenericStringInteraction stringInteraction;
     private ContextInteraction contextInteraction;
     private HomeInteraction interaction;
+    MutableLiveData<List<MovieData>> DTOList = new MutableLiveData<>();
 
     @Inject
     public HomeViewModel(AccountServices services) {
@@ -69,7 +69,7 @@ public class HomeViewModel extends ViewModel {
     }
 
 
-    public void getMoviesByPopularity() {
+    public MutableLiveData<List<MovieData>> getMoviesByPopularity() {
         AccountApp accountApp = services.retriveUserAccountLocalSaved();
         services.getTopRatedMovies(accountApp.getUSER_API_KEY())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -83,7 +83,8 @@ public class HomeViewModel extends ViewModel {
                     @Override
                     public void onNext(SearchMovieResponseModel searchMovieResponseModel) {
                         notification.hideLoading();
-                        interaction.fetchList(searchMovieResponseModel.getMovieDataList());
+                        DTOList.postValue(searchMovieResponseModel.getMovieDataList());
+                        interaction.fetchList(DTOList.getValue());
                     }
 
                     @Override
@@ -102,9 +103,11 @@ public class HomeViewModel extends ViewModel {
 
                     }
                 });
+
+        return DTOList;
     }
 
-    public void getMoviesByRating() {
+    public MutableLiveData<List<MovieData>> getMoviesByRating() {
         AccountApp accountApp = services.retriveUserAccountLocalSaved();
 
         services.getPopularMovies(accountApp.getUSER_API_KEY())
@@ -119,7 +122,8 @@ public class HomeViewModel extends ViewModel {
                     @Override
                     public void onNext(SearchMovieResponseModel searchMovieResponseModel) {
                         notification.hideLoading();
-                        interaction.fetchList(searchMovieResponseModel.getMovieDataList());
+                        DTOList.postValue(searchMovieResponseModel.getMovieDataList());
+                        interaction.fetchList(DTOList.getValue());
                     }
 
                     @Override
@@ -138,11 +142,12 @@ public class HomeViewModel extends ViewModel {
 
                     }
                 });
+        return DTOList;
 
     }
 
     @SuppressLint("CheckResult")
-    public void getFavorites() {
+    public MutableLiveData<List<MovieData>> getFavorites() {
 
         queryInBackground().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -155,7 +160,8 @@ public class HomeViewModel extends ViewModel {
                     @Override
                     public void onNext(List<MovieData> movieData) {
                         notification.hideLoading();
-                        interaction.fetchList(movieData);
+                        DTOList.postValue(movieData);
+                        interaction.fetchList(DTOList.getValue());
                     }
 
                     @Override
@@ -168,6 +174,8 @@ public class HomeViewModel extends ViewModel {
 
                     }
                 });
+
+        return DTOList;
 
     }
 
