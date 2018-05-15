@@ -1,13 +1,12 @@
 package com.example.silvio.moviesaoo.viewholder;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.example.silvio.moviesaoo.BR;
 import com.example.silvio.moviesaoo.data.entity.MovieData;
+import com.example.silvio.moviesaoo.databinding.ItemCardMovieBinding;
 import com.example.silvio.moviesaoo.view.MovieDetailsActivity;
 
 /**
@@ -22,9 +21,9 @@ public class MovieCardViewHolder extends RecyclerView.ViewHolder {
     private MovieData dataMovie;
 
 
-    public MovieCardViewHolder(View itemView) {
-        super(itemView);
-        binding = DataBindingUtil.bind(itemView);
+    public MovieCardViewHolder(ItemCardMovieBinding itemView) {
+        super(itemView.getRoot());
+        binding = itemView;
     }
 
     public void bind(MovieData movie){

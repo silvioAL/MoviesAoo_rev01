@@ -9,15 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
-import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.data.local.dao.DaoHelper;
-import com.example.silvio.moviesaoo.util.ContentConverter;
 import com.example.silvio.moviesaoo.util.ProjectionHelper;
 
-import javax.inject.Inject;
-
-import static android.R.attr.data;
 import static android.R.attr.id;
 
 /**
@@ -66,6 +62,7 @@ public class MoviesProvider extends ContentProvider {
         SQLiteDatabase database = helper.getReadableDatabase();
         mDataBaseIndicator = database.insert(AppContract.TABLE_NAME, null, contentValues);
         if (mDataBaseIndicator == -1) {
+            Log.e("PROVIDER ERROR:", " COULD NOT INSERT INTO DATABASE");
             return null;
         }
 

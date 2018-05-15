@@ -1,15 +1,16 @@
 package com.example.silvio.moviesaoo.adapter;
 
-import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.data.entity.MovieData;
+import com.example.silvio.moviesaoo.databinding.ItemCardMovieBinding;
 import com.example.silvio.moviesaoo.viewholder.MovieCardViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,26 +19,25 @@ import java.util.List;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MovieCardViewHolder> {
 
-    Context mContext;
-    LayoutInflater mInflater;
-    List<MovieData> movies;
-
-    public MoviesListAdapter(Context mContext, List<MovieData> movies) {
-        this.mContext = mContext;
-        this.movies = movies;
-        mInflater = LayoutInflater.from(mContext);
-    }
+    List<MovieData> movies = new ArrayList<>();
 
     @Override
     public MovieCardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       final View view = mInflater.inflate(R.layout.item_card_movie, parent, false);
-        return new MovieCardViewHolder(view);
+
+        ItemCardMovieBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext())
+                , R.layout.item_card_movie
+                , parent
+                , false);
+
+        return new MovieCardViewHolder(binding);
     }
 
     public void updateList(List<MovieData> movieData) {
-        movies.clear();
-        movies.addAll(movieData);
-        notifyDataSetChanged();
+        if (movieData != null) {
+            movies.clear();
+            movies.addAll(movieData);
+            notifyDataSetChanged();
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import javax.inject.Inject;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
+
     private HomeViewModel mViewModel;
 
     @Inject

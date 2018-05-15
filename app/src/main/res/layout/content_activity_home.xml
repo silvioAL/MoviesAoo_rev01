@@ -1,18 +1,16 @@
 <layout>
 
     <data>
-
         <variable
             name="homeViewModel"
             type="com.example.silvio.moviesaoo.viewmodel.HomeViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawerlt"
-        android:orientation="vertical"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_movies"

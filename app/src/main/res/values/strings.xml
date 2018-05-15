@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--APP SETTINGS-->
-    <string name="API_KEY">1ac854bf688bf17c51c2ef5b2252dd1a</string>
     <string name="app_name">MoviesAoo</string>
     <string name="PREF_DEF">MoviesAoo_PREFS</string>
     <string name="API_BASE_URL">https://api.themoviedb.org</string>
@@ -70,5 +69,9 @@
     <string name="most_pop">Mais populares</string>
     <string name="filter">Filtro</string>
     <string name="favorites_list">Somente favoritos</string>
+    <string name="no_connection_av">Não há conexão de internet</string>
+    <string name="offline_message">Offline, tente novamente mais tarde</string>
+    <string name="movie_image">movie image</string>
+    <string name="movie_banner">movie banner</string>
 
 </resources>

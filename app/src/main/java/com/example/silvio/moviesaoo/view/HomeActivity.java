@@ -1,8 +1,7 @@
 package com.example.silvio.moviesaoo.view;
 
-import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -12,41 +11,56 @@ import android.view.MenuItem;
 import com.example.silvio.moviesaoo.MainApplication;
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.adapter.MoviesListAdapter;
-import com.example.silvio.moviesaoo.data.entity.MovieData;
 import com.example.silvio.moviesaoo.data.local.AppContract;
 import com.example.silvio.moviesaoo.databinding.ContentActivityHomeBinding;
-import com.example.silvio.moviesaoo.interfaces.ContextInteraction;
-import com.example.silvio.moviesaoo.interfaces.HomeInteraction;
+import com.example.silvio.moviesaoo.interfaces.HomeInteractions;
 import com.example.silvio.moviesaoo.viewmodel.HomeViewModel;
 import com.example.silvio.moviesaoo.viewmodel.ViewModelFactory;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-public class HomeActivity extends GenericActivity implements ContextInteraction, HomeInteraction {
-
+public class HomeActivity extends GenericActivity implements LifecycleOwner, HomeInteractions {
 
     @Inject
     ViewModelFactory viewModelFactory;
-    @Inject
     HomeViewModel homeViewModel;
     ContentActivityHomeBinding binding;
+    MoviesListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.content_activity_home);
         injectDependencies();
-        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
-        binding.setHomeViewModel(homeViewModel);
-        homeViewModel.setNotification(this);
-        homeViewModel.setStringInteraction(this);
-        homeViewModel.setInteraction(this);
-        homeViewModel.setHomeInteraction(this);
 
-        final Observer<List<MovieData>> listObserver = movieData -> fetchList(movieData);
-        homeViewModel.getMoviesByPopularity().observe(this, listObserver);
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel.class);
+        if (savedInstanceState == null) {
+            homeViewModel.triggerLoading("");
+        }
+
+        adapter = new MoviesListAdapter();
+        binding.rvMovies.setAdapter(adapter);
+        binding.rvMovies.setHasFixedSize(true);
+        binding.rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+        isLoadingContent();
+        observeViewModel(homeViewModel);
+
+    }
+
+
+    private void observeViewModel(HomeViewModel homeViewModel) {
+
+        homeViewModel.getObservableListOfMovies().observe(this, movieData -> {
+            if (homeViewModel.checkIfIsOnline()) {
+                if (!movieData.isEmpty()) {
+                    finishedLoading();
+                    adapter.updateList(movieData);
+                }
+            } else {
+                showError(getString(R.string.offline_message));
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,11 +74,11 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            fetchListBy(AppContract.SAVED_CRITERIA);
+            homeViewModel.triggerLoading(AppContract.SAVED_CRITERIA);
         } else if (id == R.id.popular) {
-            fetchListBy(AppContract.POPULAR_CRITERIA);
+            homeViewModel.triggerLoading(AppContract.POPULAR_CRITERIA);
         } else if (id == R.id.top_rated) {
-            fetchListBy(AppContract.RATING_CRITERIA);
+            homeViewModel.triggerLoading(AppContract.RATING_CRITERIA);
         }
 
         return super.onOptionsItemSelected(item);
@@ -75,26 +89,17 @@ public class HomeActivity extends GenericActivity implements ContextInteraction,
     }
 
     @Override
-    public Context getContext() {
-        return getBaseContext();
+    public void isLoadingContent() {
+        this.showLoading();
     }
 
     @Override
-    public void fetchList(List<MovieData> movies) {
-        if (movies != null) {
-            binding.rvMovies.setAdapter(new MoviesListAdapter(getBaseContext(), movies));
-            binding.rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        }
+    public void finishedLoading() {
+        this.hideLoading();
     }
 
     @Override
-    public void fetchListBy(String criteria) {
-        if (criteria.equals(AppContract.RATING_CRITERIA)) {
-            homeViewModel.getMoviesByRating();
-        } else if (criteria.equals(AppContract.COLUMN_POPULARITY)) {
-            homeViewModel.getMoviesByPopularity();
-        } else if (criteria.equals(AppContract.SAVED_CRITERIA)) {
-            homeViewModel.getFavorites();
-        }
+    public void showError(String error) {
+        this.openAlertDialog(error);
     }
 }

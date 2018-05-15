@@ -11,7 +11,8 @@ public class ProjectionHelper {
     public static String[] getMovieDetailsProjection() {
 
         String[] projection = {
-                AppContract.COLUMN_MOVIE_ID
+                AppContract._ID
+                , AppContract.COLUMN_MOVIE_ID
                 , AppContract.COLUMN_ADULT
                 , AppContract.COLUMN_BACKDROP_PATH
                 , AppContract.COLUMN_GENRE_IDS

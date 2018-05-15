@@ -19,11 +19,10 @@ public class ContentValuesParser {
 
     public static ContentValues convertMovieDetailsToDBValues(MovieData movieData){
 
-
         Gson gson = new Gson();
 
         ContentValues values = new ContentValues();
-        values.put(AppContract.COLUMN_MOVIE_ID, movieData.getId());
+        values.put(AppContract.COLUMN_MOVIE_ID, movieData.getMovieId());
         values.put(AppContract.COLUMN_ADULT, movieData.isAdult());
         values.put(AppContract.COLUMN_BACKDROP_PATH, movieData.getBackdrop_path());
         values.put(AppContract.COLUMN_GENRE_IDS, gson.toJson(movieData.getGenre_ids()));
@@ -50,6 +49,7 @@ public class ContentValuesParser {
 
     public static MovieData extractMovieFromCursor(Cursor cursor) {
 
+        int movie_DB_ID_Index = cursor.getColumnIndex(AppContract._ID);
         int movie_ID_Index = cursor.getColumnIndex(AppContract.COLUMN_MOVIE_ID);
         int movie_ADULT_Index = cursor.getColumnIndex(AppContract.COLUMN_ADULT);
         int movie_BACKDROP_PATH_Index = cursor.getColumnIndex(AppContract.COLUMN_BACKDROP_PATH);
@@ -67,7 +67,8 @@ public class ContentValuesParser {
 
 
         MovieData movieData = new MovieData();
-        movieData.setMovieId(cursor.getInt(movie_ID_Index));
+        movieData.setDbId(cursor.getInt(movie_DB_ID_Index));
+        movieData.setMovieId(cursor.getString(movie_ID_Index));
         movieData.setAdult(cursor.getInt(movie_ADULT_Index) > 0);
         movieData.setBackdrop_path(cursor.getString(movie_BACKDROP_PATH_Index));
         movieData.setGenre_ids(fromString(cursor.getString(movie_GENRE_IDS_Index)));
@@ -78,7 +79,7 @@ public class ContentValuesParser {
         movieData.setPoster_path(cursor.getString(movie_POSTER_PATH_Index));
         movieData.setPopularity(cursor.getString(movie_POPULARITY_Index));
         movieData.setTitle(cursor.getString(movie_TITLE_Index));
-        movieData.setMovieId(cursor.getInt(movie_VIDEO_Index));
+        movieData.setVideo(cursor.getString(movie_VIDEO_Index));
         movieData.setVote_average(cursor.getString(movie_VOTE_AVERAGE_Index));
         movieData.setVote_count(cursor.getString(movie_VOTE_COUNT_Index));
 

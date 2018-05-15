@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'API_KEY', "\"your key\""
         defaultConfig {
             vectorDrawables.useSupportLibrary = true
         }
@@ -57,6 +58,8 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    //EVENTS
+    compile 'org.greenrobot:eventbus:3.1.1'
     //NETWORK AND SERIALIZATION
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -64,13 +67,13 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     //DEPENDENCY INJECTION
-    compile 'com.google.dagger:dagger:2.9'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    compile 'com.google.dagger:dagger:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     //HEX
     compile 'commons-codec:commons-codec:1.10'
     // Lifecyles, LiveData and ViewModel
-    compile 'android.arch.lifecycle:runtime:1.1.0'
-    compile 'android.arch.lifecycle:extensions:1.1.0'
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
+    compile 'android.arch.lifecycle:runtime:1.1.1'
+    compile 'android.arch.lifecycle:extensions:1.1.1'
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
 }

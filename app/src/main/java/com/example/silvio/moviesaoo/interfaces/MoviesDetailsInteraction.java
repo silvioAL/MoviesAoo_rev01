@@ -11,6 +11,7 @@ import java.util.List;
 public interface MoviesDetailsInteraction {
     void fetchTrailersList(List<String> moviesUrls);
 
+    void changeFabColor(boolean marked);
     void fetchReviewsList(List<ResultsResponseModel> resultsResponseModels);
 
 }

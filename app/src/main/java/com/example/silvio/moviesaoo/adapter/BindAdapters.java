@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.silvio.moviesaoo.MainApplication;
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.util.FontManager;
@@ -22,7 +23,10 @@ public class BindAdapters {
         if (url != null && view != null) {
             Glide.with(view.getContext())
                     .load(url)
+                    .asBitmap()
                     .placeholder(R.drawable.ic_empty)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontTransform()
                     .into(view);
         }
     }

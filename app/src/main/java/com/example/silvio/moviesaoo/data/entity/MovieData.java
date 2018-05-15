@@ -1,10 +1,11 @@
 package com.example.silvio.moviesaoo.data.entity;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +13,20 @@ import java.util.ArrayList;
  */
 
 
-public class MovieData implements Serializable {
+public class MovieData implements Parcelable {
 
     private Integer dbId;
-    @SerializedName("id")
-    private Integer movieId;
+    public static final Creator<MovieData> CREATOR = new Creator<MovieData>() {
+        @Override
+        public MovieData createFromParcel(Parcel in) {
+            return new MovieData(in);
+        }
+
+        @Override
+        public MovieData[] newArray(int size) {
+            return new MovieData[size];
+        }
+    };
     @SerializedName("adult")
     private boolean adult;
     @SerializedName("backdrop_path")
@@ -44,9 +54,14 @@ public class MovieData implements Serializable {
     @SerializedName("vote_count")
     private String vote_count;
     private Boolean isFavorite;
+    @SerializedName("id")
+    private String movieId;
 
+    public MovieData() {
 
-    public MovieData(boolean adult, String backdrop_path, ArrayList<String> genre_ids, Integer movieId, String original_language, String original_title, String overview, String release_date, String poster_path, String popularity, String title, String video, String vote_average, String vote_count) {
+    }
+
+    public MovieData(boolean adult, String backdrop_path, ArrayList<String> genre_ids, String movieId, String original_language, String original_title, String overview, String release_date, String poster_path, String popularity, String title, String video, String vote_average, String vote_count) {
         this.adult = adult;
         this.backdrop_path = backdrop_path;
         this.genre_ids = genre_ids;
@@ -69,16 +84,35 @@ public class MovieData implements Serializable {
         this.isFavorite = false;
     }
 
-    public MovieData() {
-
+    protected MovieData(Parcel in) {
+        if (in.readByte() == 0) {
+            dbId = null;
+        } else {
+            dbId = in.readInt();
+        }
+        movieId = in.readString();
+        adult = in.readByte() != 0;
+        backdrop_path = in.readString();
+        genre_ids = in.createStringArrayList();
+        original_language = in.readString();
+        original_title = in.readString();
+        overview = in.readString();
+        release_date = in.readString();
+        poster_path = in.readString();
+        popularity = in.readString();
+        title = in.readString();
+        video = in.readString();
+        vote_average = in.readString();
+        vote_count = in.readString();
+        byte tmpIsFavorite = in.readByte();
+        isFavorite = tmpIsFavorite == 0 ? null : tmpIsFavorite == 1;
     }
 
-
-    public Integer getMovieId() {
+    public String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 
@@ -122,13 +156,6 @@ public class MovieData implements Serializable {
         this.backdrop_path = backdrop_path;
     }
 
-    public Integer getId() {
-        return movieId;
-    }
-
-    public void setId(Integer id) {
-        this.movieId = id;
-    }
 
     public String getOriginal_language() {
         return original_language;
@@ -209,5 +236,37 @@ public class MovieData implements Serializable {
     public void setVote_count(String vote_count) {
         this.vote_count = vote_count;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        if (dbId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(dbId);
+        }
+        dest.writeString(movieId);
+        dest.writeByte((byte) (adult ? 1 : 0));
+        dest.writeString(backdrop_path);
+        dest.writeStringList(genre_ids);
+        dest.writeString(original_language);
+        dest.writeString(original_title);
+        dest.writeString(overview);
+        dest.writeString(release_date);
+        dest.writeString(poster_path);
+        dest.writeString(popularity);
+        dest.writeString(title);
+        dest.writeString(video);
+        dest.writeString(vote_average);
+        dest.writeString(vote_count);
+        dest.writeByte((byte) (isFavorite == null ? 0 : isFavorite ? 1 : 2));
+    }
+
 
 }

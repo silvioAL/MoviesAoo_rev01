@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="20dp"
-            android:onClick="@{()->movie.saveAsFavorite()}"
+            android:onClick="@{()->movie.changeStatement()}"
             app:srcCompat="@drawable/ic_star_black_24dp" />
 
         <android.support.v4.widget.NestedScrollView
@@ -38,6 +38,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
+                    android:contentDescription="@string/movie_banner"
                     android:layout_margin="15dp"
                     app:imageUrl="@{movie.movieImgUrl}" />
 

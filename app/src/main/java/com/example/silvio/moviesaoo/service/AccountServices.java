@@ -3,6 +3,7 @@ package com.example.silvio.moviesaoo.service;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.silvio.moviesaoo.BuildConfig;
 import com.example.silvio.moviesaoo.R;
 import com.example.silvio.moviesaoo.data.model.GetMovieTrailersResponseModel;
 import com.example.silvio.moviesaoo.data.model.GetMoviesGenresResponseModel;
@@ -39,7 +40,7 @@ public class AccountServices extends ServiceErrorHandler {
     public boolean saveLocally(AccountApp accountApp) {
         try {
             AccountApp app = accountApp;
-            getSharedPreferences().edit().putString(String.valueOf(R.string.API_KEY), GenericJsonParser.objectToJson(app)).apply();
+            getSharedPreferences().edit().putString(String.valueOf(BuildConfig.API_KEY), GenericJsonParser.objectToJson(app)).apply();
             return true;
         } catch (Exception e) {
             return false;
@@ -48,7 +49,7 @@ public class AccountServices extends ServiceErrorHandler {
 
     public AccountApp retriveUserAccountLocalSaved() {
         try {
-            String accountSingletonApp = getSharedPreferences().getString(String.valueOf(R.string.API_KEY), null);
+            String accountSingletonApp = getSharedPreferences().getString(String.valueOf(BuildConfig.API_KEY), null);
             if (accountSingletonApp != null)
                 return GenericJsonParser.jsonToObject(accountSingletonApp, AccountApp.class);
             else return new AccountApp(accountSingletonApp);

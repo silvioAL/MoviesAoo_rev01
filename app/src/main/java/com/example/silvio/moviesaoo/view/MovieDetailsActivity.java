@@ -3,6 +3,7 @@ package com.example.silvio.moviesaoo.view;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.example.silvio.moviesaoo.MainApplication;
@@ -31,7 +32,7 @@ public class MovieDetailsActivity extends GenericActivity implements ContextInte
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
         injectDependencies();
-        MovieData movie = (MovieData) getIntent().getSerializableExtra("movie");
+        MovieData movie = getIntent().getParcelableExtra("movie");
         binding.setMovie(movieDetailsViewModel);
         movieDetailsViewModel.setStringInteraction(this);
         movieDetailsViewModel.fetchField(movie);
@@ -40,6 +41,7 @@ public class MovieDetailsActivity extends GenericActivity implements ContextInte
         movieDetailsViewModel.checkForTrailers();
         movieDetailsViewModel.setMoviesDetailsInteraction(this);
         movieDetailsViewModel.checkForRatings();
+        movieDetailsViewModel.setupFabStatement();
 
     }
 
@@ -58,7 +60,16 @@ public class MovieDetailsActivity extends GenericActivity implements ContextInte
         TrailersAdapter adapter = new TrailersAdapter(getBaseContext(), moviesUrls);
         binding.rvTrailers.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rvTrailers.setAdapter(adapter);
+    }
 
+    @Override
+    public void changeFabColor(boolean marked) {
+
+        if (marked) {
+            binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_star_black_24dp));
+        } else {
+            binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_blue_star));
+        }
     }
 
     @Override

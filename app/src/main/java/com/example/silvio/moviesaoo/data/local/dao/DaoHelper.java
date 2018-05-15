@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.silvio.moviesaoo.data.local.AppContract;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
 
 /**
  * Created by silvioallgayertrindade on 28/03/2018.
@@ -25,7 +22,7 @@ public class DaoHelper extends SQLiteOpenHelper {
         String SQL_CREATE_NEW_TABLE = "CREATE TABLE "
                 + AppContract.TABLE_NAME + " (" +
                 AppContract._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                AppContract.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                AppContract.COLUMN_MOVIE_ID + " TEXT, " +
                 AppContract.COLUMN_ADULT + " TEXT, " +
                 AppContract.COLUMN_BACKDROP_PATH + " TEXT, " +
                 AppContract.COLUMN_GENRE_IDS + " TEXT, " +

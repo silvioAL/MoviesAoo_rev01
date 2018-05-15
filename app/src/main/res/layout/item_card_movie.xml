@@ -31,6 +31,7 @@
             android:layout_marginTop="1dp"
             android:minHeight="185dp"
             android:minWidth="130dp"
+            android:contentDescription="@string/movie_image"
             android:scaleType="centerCrop"
             app:imageUrl="@{holder.movieImgUrl}" />
 
@@ -42,6 +43,7 @@
             android:layout_marginRight="2dp"
             android:background="@color/golden_rod"
             android:text="@{holder.title}"
+            android:contentDescription="@string/movie_title"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:font="@{@string/m_bold}" />

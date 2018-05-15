@@ -27,18 +27,6 @@ public class SearchMovieResponseModel {
         this.movieDataList = movieDataList;
     }
 
-    public String getPage() {
-        return page;
-    }
-
-    public String getTotal_results() {
-        return total_results;
-    }
-
-    public String getTotal_pages() {
-        return total_pages;
-    }
-
     public List<MovieData> getMovieDataList() {
         return movieDataList;
     }

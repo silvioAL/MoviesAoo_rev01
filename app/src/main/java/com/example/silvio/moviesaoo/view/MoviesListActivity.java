@@ -80,7 +80,7 @@ public class MoviesListActivity extends GenericActivity implements ContextIntera
     @Override
     public void fetchList(List<MovieData> updated) {
         List<MovieData> empty = new ArrayList<>();
-        MoviesListAdapter adapter = new MoviesListAdapter(getContext(), empty);
+        MoviesListAdapter adapter = new MoviesListAdapter();
         binding.rvMovies.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
         binding.rvMovies.setAdapter(adapter);
         binding.rvMovies.setHasFixedSize(true);

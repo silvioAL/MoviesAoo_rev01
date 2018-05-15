@@ -17,12 +17,12 @@ public class PreferenceStorageUtil {
         this.mContext = mContext;
     }
 
-    public void saveFilteringMode(boolean mode) {
-        mContext.getSharedPreferences(AppContract.MOVIES_APPREF, 0).edit().putBoolean(PARAM, mode).apply();
+    public void saveFilteringMode(String filter) {
+        mContext.getSharedPreferences(AppContract.MOVIES_APPREF, 0).edit().putString(PARAM, filter).apply();
     }
 
-    public boolean retrieveFilteringMode() {
-        return mContext.getSharedPreferences(AppContract.MOVIES_APPREF, 0).getBoolean(PARAM, false);
+    public String retrieveFilteringMode() {
+        return mContext.getSharedPreferences(AppContract.MOVIES_APPREF, 0).getString(PARAM, "");
 
     }
 
